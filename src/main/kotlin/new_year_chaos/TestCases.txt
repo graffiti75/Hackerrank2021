@@ -1,0 +1,10 @@
+TestCase 0
+Input (stdin)
+2
+5
+2 1 5 3 4
+5
+2 5 1 3 4
+Expected Output
+3
+Too chaotic
