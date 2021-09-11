@@ -18,32 +18,37 @@ fun minimumBribes(q: Array<Int>): Unit {
     var same = false
     var ind = 0
     while (mPermutations <= q.size && !same) {
-        println("--- ind = $ind")
         // ------------------------->>>>>
 
+        println("--- ind = $ind")
+        permArray = Array(q.size) { 0 }
         println("--- minimumBribes() -> permArray = ${permArray.printArray()}, --- ind = $ind")
 
         // Step 1: Calculate number of bribes necessary for each item, between arrayIn and arrayOut (q).
-        for (i in q.indices) {                           // i -> 0, 1, 2
-            val index = inArray.toList().indexOf(q[i])   // 1, 0, 4 ...
-            permArray[i] = kotlin.math.abs(index - i) // 1, 1, 2 ...
+        for (i in q.indices) {
+            val inElem = inArray[i]
+            val inIndex = inArray.toList().indexOf(inElem)
+            val qIndex = q.toList().indexOf(inElem)
+            val permutationsNumber = inIndex - qIndex
+            permArray[i] = kotlin.math.abs(permutationsNumber)
         }
 
         // Step 2: Find the biggest bribery value (let's call it "big") .
-        val aux = permArray.toList().maxOrNull()        // 2
-        val qAux = q[aux!!]                             // 5
-        val bigBriberyIndex = inArray.indexOf(qAux)       // 4
+        val aux = permArray.toList().max()
+        val inIndex = permArray.toList().indexOf(aux)
+//        val bigBriberyIndex = inArray[inIndex]
 
         // Step 3: Perform "big" briberies, and update arrayIn.
-        inArray = performPermutations(inArray, q, bigBriberyIndex)
+//        inArray = performPermutations(inArray, q, bigBriberyIndex)
+        inArray = performPermutations(inArray, q, inIndex)
 
         // Step 4: Check if arrayIn == arrayOut (q).
         same = checkArrays(inArray, q)
 
         println("--- minimumBribes() -> same = $same")
+        ind++
 
         // <<<<<-------------------------
-        ind++
     }
 
     println("--- minimumBribes() -> mPermutations = $mPermutations, --- ind = $ind, same = $same")
@@ -64,7 +69,7 @@ private fun performPermutations(inArray: Array<Int>, q: Array<Int>, inArrayIndex
         for (i in inArrayIndex until outIndex)
             newArray = swapArray(newArray, i, i + 1)
     }
-    println("--- performPermutations() -> mPermutations = $mPermutations, --- newArray = ${newArray.printArray()}")
+    println("\t--- performPermutations() -> mPermutations = $mPermutations, --- newArray = ${newArray.printArray()}")
     return newArray
 }
 
@@ -84,6 +89,16 @@ private fun checkArrays(inArray: Array<Int>, q: Array<Int>): Boolean {
         if (cont == inArray.size) return true
     }
     return false
+}
+
+fun <T : Comparable<T>> Iterable<T>.max(): T {
+    val iterator = iterator()
+    var max = iterator.next()
+    while (iterator.hasNext()) {
+        val e = iterator.next()
+        if (max < e) max = e
+    }
+    return max
 }
 
 fun Array<Int>.printArray(): String {

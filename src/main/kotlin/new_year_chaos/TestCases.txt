@@ -8,3 +8,30 @@ Input (stdin)
 Expected Output
 3
 Too chaotic
+-----
+TestCase 11
+Input (stdin)
+1
+8
+1 2 5 3 4 7 8 6
+Expected Output
+4
+==================================================
+    0 1 2 3 4 5 6 7              0 1 2 3 4 5 6 7
+q = 1 2 5 3 4 7 8 6         in = 1 2 3 4 5 6 7 8
+
+Step 1)
+perm = 0 0 2 1 1 1 1 2
+Step 2)
+5 -> 2 perms
+Step 3)
+0 1 2 3 4 5 6 7
+1 2 5 3 4 6 7 8
+
+Step 1)
+perm = 0 0 0 0 0 2 1 1
+Step 2)
+6 -> 2 perms
+Step 3)
+0 1 2 3 4 5 6 7
+1 2 5 3 4 7 8 6
